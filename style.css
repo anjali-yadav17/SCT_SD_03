@@ -1,0 +1,50 @@
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #74ebd5, #9face6);
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.container {
+  text-align: center;
+}
+
+#sudoku-grid {
+  display: grid;
+  grid-template-columns: repeat(9, 40px);
+  gap: 2px;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+input {
+  width: 38px;
+  height: 38px;
+  text-align: center;
+  font-size: 18px;
+  border: 1px solid #333;
+}
+
+input:focus {
+  outline: 2px solid #4caf50;
+}
+
+.controls {
+  margin-bottom: 10px;
+}
+
+#message {
+  font-weight: bold;
+  font-size: 18px;
+  color: #fff;
+}
+
+#timer {
+  color: #fff;
+  font-size: 16px;
+}
