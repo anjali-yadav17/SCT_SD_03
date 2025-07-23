@@ -50,8 +50,6 @@ numberPad.addEventListener("click", (e) => {
   if (!selectedInput || !e.target.textContent.match(/[1-9]/)) return;
   if (selectedInput.hasAttribute("readonly")) return;
   selectedInput.value = e.target.textContent;
-
-  // placeholder validation
   if (Math.random() < 0.3) {
     selectedInput.classList.add("incorrect");
     mistakes++;

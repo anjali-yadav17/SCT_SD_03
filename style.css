@@ -39,8 +39,6 @@ body {
   outline: none;
   box-sizing: border-box;
 }
-
-/* Thick borders between 3x3 boxes */
 .game-board input:nth-child(9n+1),
 .game-board input:nth-child(9n+4),
 .game-board input:nth-child(9n+7) {
@@ -100,8 +98,6 @@ input[readonly] {
 .panel-actions button:hover {
   background: #45a049;
 }
-
-/* Footer styling */
 .footer {
   margin-top: 20px;
   text-align: center;
