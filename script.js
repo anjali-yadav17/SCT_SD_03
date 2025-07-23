@@ -1,85 +1,90 @@
-
-let currentGrid = [];
-let startTime;
+let board = document.getElementById('sudoku-board');
+let numberPad = document.getElementById('number-pad');
+let mistakes = 0;
+let selectedInput = null;
 let timerInterval;
+let seconds = 0;
 
-function generatePuzzle() {
-  const difficulty = document.getElementById("difficulty").value;
-  currentGrid = createPuzzle(difficulty);
-  renderGrid(currentGrid);
-  document.getElementById("message").innerText = "";
-  resetTimer();
-  startTimer();
-}
+const puzzle = [
+  "", "3", "", "", "7", "", "", "", "2",
+  "6", "", "", "1", "", "5", "", "", "8",
+  "", "9", "8", "", "", "2", "", "6", "",
+  "8", "", "", "7", "6", "", "", "", "3",
+  "", "", "", "", "", "", "", "", "",
+  "7", "", "", "", "2", "4", "", "", "6",
+  "", "6", "", "5", "", "", "2", "8", "",
+  "2", "", "", "4", "", "9", "", "", "5",
+  "3", "", "", "", "8", "", "", "7", ""
+];
 
-function renderGrid(grid) {
-  const gridDiv = document.getElementById("sudoku-grid");
-  gridDiv.innerHTML = "";
-  for (let row = 0; row < 9; row++) {
-    for (let col = 0; col < 9; col++) {
-      const input = document.createElement("input");
-      input.setAttribute("maxlength", 1);
-      input.dataset.row = row;
-      input.dataset.col = col;
-      if (grid[row][col] !== 0) {
-        input.value = grid[row][col];
-        input.disabled = true;
-      }
-      input.addEventListener("keydown", handleKeyDown);
-      gridDiv.appendChild(input);
+function buildBoard() {
+  board.innerHTML = "";
+  for (let i = 0; i < 81; i++) {
+    let input = document.createElement("input");
+    input.setAttribute("type", "text");
+    input.setAttribute("maxlength", 1);
+    input.value = puzzle[i];
+    if (puzzle[i] !== "") {
+      input.setAttribute("readonly", true);
+      input.style.backgroundColor = "#ddd";
     }
+    input.addEventListener("focus", () => selectedInput = input);
+    board.appendChild(input);
   }
-}
-
-function handleKeyDown(e) {
-  const row = parseInt(e.target.dataset.row);
-  const col = parseInt(e.target.dataset.col);
-  const index = row * 9 + col;
-  const gridInputs = document.querySelectorAll("#sudoku-grid input");
-
-  if (e.key === "ArrowRight" && col < 8) gridInputs[index + 1].focus();
-  else if (e.key === "ArrowLeft" && col > 0) gridInputs[index - 1].focus();
-  else if (e.key === "ArrowDown" && row < 8) gridInputs[index + 9].focus();
-  else if (e.key === "ArrowUp" && row > 0) gridInputs[index - 9].focus();
-  else if (e.key === "Enter") checkSolution();
-}
-
-function createPuzzle(difficulty) {
-  const grid = Array.from({ length: 9 }, () => Array(9).fill(0));
-  // Dummy data for demo (can replace with algorithm or API)
-  if (difficulty === "easy") grid[0][0] = 5;
-  else if (difficulty === "medium") grid[0][0] = 3;
-  else if (difficulty === "hard") grid[0][0] = 1;
-  return grid;
-}
-
-function checkSolution() {
-  const gridInputs = document.querySelectorAll("#sudoku-grid input");
-  let correct = true;
-  for (let input of gridInputs) {
-    if (!input.disabled && input.value === "") correct = false;
-  }
-  document.getElementById("message").innerText = correct ? "✅ Correct!" : "❌ Incorrect, keep trying.";
-}
-
-function getHint() {
-  const empty = Array.from(document.querySelectorAll("#sudoku-grid input")).find(i => i.value === "" && !i.disabled);
-  if (empty) empty.value = Math.ceil(Math.random() * 9);
-}
-
-function startTimer() {
-  startTime = Date.now();
-  timerInterval = setInterval(updateTimer, 1000);
 }
 
 function updateTimer() {
-  const elapsed = Math.floor((Date.now() - startTime) / 1000);
-  const minutes = String(Math.floor(elapsed / 60)).padStart(2, '0');
-  const seconds = String(elapsed % 60).padStart(2, '0');
-  document.getElementById("timer").innerText = `Time: ${minutes}:${seconds}`;
+  seconds++;
+  const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+  const sec = String(seconds % 60).padStart(2, "0");
+  document.getElementById("timer").textContent = `${min}:${sec}`;
 }
 
-function resetTimer() {
+function startTimer() {
   clearInterval(timerInterval);
-  document.getElementById("timer").innerText = "Time: 00:00";
+  seconds = 0;
+  timerInterval = setInterval(updateTimer, 1000);
 }
+
+numberPad.addEventListener("click", (e) => {
+  if (!selectedInput || !e.target.textContent.match(/[1-9]/)) return;
+  if (selectedInput.hasAttribute("readonly")) return;
+  selectedInput.value = e.target.textContent;
+
+  // placeholder validation
+  if (Math.random() < 0.3) {
+    selectedInput.classList.add("incorrect");
+    mistakes++;
+    document.getElementById("mistakes").textContent = mistakes;
+    if (mistakes >= 3) {
+      alert("Game Over: Too many mistakes!");
+      playAgain();
+    }
+  } else {
+    selectedInput.classList.remove("incorrect");
+  }
+});
+
+function eraseCell() {
+  if (selectedInput && !selectedInput.hasAttribute("readonly")) {
+    selectedInput.value = "";
+  }
+}
+
+function hint() {
+  if (selectedInput && !selectedInput.hasAttribute("readonly")) {
+    selectedInput.value = Math.floor(Math.random() * 9) + 1;
+  }
+}
+
+function playAgain() {
+  buildBoard();
+  startTimer();
+  document.getElementById("mistakes").textContent = "0";
+  mistakes = 0;
+}
+
+window.onload = () => {
+  buildBoard();
+  startTimer();
+};

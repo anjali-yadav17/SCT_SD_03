@@ -1,50 +1,100 @@
-
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: linear-gradient(135deg, #74ebd5, #9face6);
+  font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
+  background: linear-gradient(to right, #667eea, #764ba2);
+  color: white;
   display: flex;
   justify-content: center;
   align-items: center;
   height: 100vh;
 }
 
-.container {
-  text-align: center;
+.sudoku-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background: #2c2f4a;
+  padding: 20px;
+  border-radius: 10px;
 }
 
-#sudoku-grid {
+.game-board {
   display: grid;
   grid-template-columns: repeat(9, 40px);
-  gap: 2px;
-  justify-content: center;
-  margin: 20px 0;
+  grid-template-rows: repeat(9, 40px);
+  gap: 0;
 }
 
-input {
-  width: 38px;
-  height: 38px;
+.game-board input {
+  width: 40px;
+  height: 40px;
   text-align: center;
   font-size: 18px;
-  border: 1px solid #333;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #000;
+  outline: none;
+  box-sizing: border-box;
 }
 
-input:focus {
-  outline: 2px solid #4caf50;
+/* Thick borders between 3x3 boxes */
+.game-board input:nth-child(9n+1),
+.game-board input:nth-child(9n+4),
+.game-board input:nth-child(9n+7) {
+  border-left: 2px solid black;
 }
 
-.controls {
-  margin-bottom: 10px;
+.game-board input:nth-child(-n+9) {
+  border-top: 2px solid black;
 }
 
-#message {
-  font-weight: bold;
-  font-size: 18px;
-  color: #fff;
+.game-board input:nth-child(n+19):nth-child(-n+27),
+.game-board input:nth-child(n+46):nth-child(-n+54) {
+  border-bottom: 2px solid black;
 }
 
-#timer {
-  color: #fff;
+.game-board input:nth-child(3n) {
+  border-right: 2px solid black;
+}
+
+input.incorrect {
+  background-color: #ffcccc !important;
+}
+
+input[readonly] {
+  background-color: #ddd;
+}
+
+.game-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.panel-header p {
+  margin: 5px 0;
+}
+
+.number-pad {
+  display: grid;
+  grid-template-columns: repeat(3, 50px);
+  gap: 10px;
+  margin: 15px 0;
+}
+
+.number-pad button,
+.panel-actions button {
+  background: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 5px;
   font-size: 16px;
+  cursor: pointer;
+}
+
+.number-pad button:hover,
+.panel-actions button:hover {
+  background: #45a049;
 }

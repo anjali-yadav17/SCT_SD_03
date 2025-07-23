@@ -2,28 +2,37 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Sudoku Solver</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Sudoku Game</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <h1>Sudoku Solver</h1>
-    <div class="controls">
-      <label for="difficulty">Difficulty:</label>
-      <select id="difficulty">
-        <option value="easy">Easy</option>
-        <option value="medium">Med</option>
-        <option value="hard">Hard</option>
-      </select>
-      <button onclick="generatePuzzle()">Generate Puzzle</button>
-      <button onclick="checkSolution()">Check Solution</button>
-      <button onclick="getHint()">Hint</button>
+  <div class="sudoku-container">
+    <div class="game-board" id="sudoku-board"></div>
+
+    <div class="game-panel">
+      <div class="panel-header">
+        <h2>Sudoku</h2>
+        <p><strong>Mistakes:</strong> <span id="mistakes">0</span>/3</p>
+        <p><strong>Timer:</strong> <span id="timer">00:00</span></p>
+      </div>
+
+      <div class="number-pad" id="number-pad">
+        <button>1</button><button>2</button><button>3</button>
+        <button>4</button><button>5</button><button>6</button>
+        <button>7</button><button>8</button><button>9</button>
+      </div>
+
+      <div class="panel-actions">
+        <button onclick="eraseCell()">🧹 Erase</button>
+        <button onclick="hint()">💡 Hint</button>
+        <button onclick="playAgain()">🔁 New Game</button>
+      </div>
     </div>
-    <div id="sudoku-grid"></div>
-    <p id="message"></p>
-    <p id="timer">Time: 00:00</p>
   </div>
   <script src="script.js"></script>
+  <footer class="footer">
+    <p>Developed by <strong>Anjali Yadav</strong></p>
+  </footer>
 </body>
 </html>
