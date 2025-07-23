@@ -5,9 +5,10 @@ body {
   background: linear-gradient(to right, #667eea, #764ba2);
   color: white;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .sudoku-container {
@@ -17,6 +18,7 @@ body {
   background: #2c2f4a;
   padding: 20px;
   border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 .game-board {
@@ -97,4 +99,16 @@ input[readonly] {
 .number-pad button:hover,
 .panel-actions button:hover {
   background: #45a049;
+}
+
+/* Footer styling */
+.footer {
+  margin-top: 20px;
+  text-align: center;
+  color: #f8f8f8;
+  font-size: 14px;
+}
+
+.footer strong {
+  color: #ffcad4;
 }
