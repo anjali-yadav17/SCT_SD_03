@@ -1,88 +1,187 @@
-let board = document.getElementById('sudoku-board');
-let numberPad = document.getElementById('number-pad');
-let mistakes = 0;
-let selectedInput = null;
+const board = document.getElementById('board');
+let solutionBoard = [];
 let timerInterval;
 let seconds = 0;
-
-const puzzle = [
-  "", "3", "", "", "7", "", "", "", "2",
-  "6", "", "", "1", "", "5", "", "", "8",
-  "", "9", "8", "", "", "2", "", "6", "",
-  "8", "", "", "7", "6", "", "", "", "3",
-  "", "", "", "", "", "", "", "", "",
-  "7", "", "", "", "2", "4", "", "", "6",
-  "", "6", "", "5", "", "", "2", "8", "",
-  "2", "", "", "4", "", "9", "", "", "5",
-  "3", "", "", "", "8", "", "", "7", ""
-];
-
-function buildBoard() {
-  board.innerHTML = "";
-  for (let i = 0; i < 81; i++) {
-    let input = document.createElement("input");
-    input.setAttribute("type", "text");
-    input.setAttribute("maxlength", 1);
-    input.value = puzzle[i];
-    if (puzzle[i] !== "") {
-      input.setAttribute("readonly", true);
-      input.style.backgroundColor = "#ddd";
-    }
-    input.addEventListener("focus", () => selectedInput = input);
-    board.appendChild(input);
-  }
-}
-
-function updateTimer() {
-  seconds++;
-  const min = String(Math.floor(seconds / 60)).padStart(2, "0");
-  const sec = String(seconds % 60).padStart(2, "0");
-  document.getElementById("timer").textContent = `${min}:${sec}`;
-}
 
 function startTimer() {
   clearInterval(timerInterval);
   seconds = 0;
-  timerInterval = setInterval(updateTimer, 1000);
+  timerInterval = setInterval(() => {
+    seconds++;
+    const min = String(Math.floor(seconds / 60)).padStart(2, '0');
+    const sec = String(seconds % 60).padStart(2, '0');
+    document.getElementById("timer").textContent = `⏱ ${min}:${sec}`;
+  }, 1000);
 }
 
-numberPad.addEventListener("click", (e) => {
-  if (!selectedInput || !e.target.textContent.match(/[1-9]/)) return;
-  if (selectedInput.hasAttribute("readonly")) return;
-  selectedInput.value = e.target.textContent;
-  if (Math.random() < 0.3) {
-    selectedInput.classList.add("incorrect");
-    mistakes++;
-    document.getElementById("mistakes").textContent = mistakes;
-    if (mistakes >= 3) {
-      alert("Game Over: Too many mistakes!");
-      playAgain();
+function createBoard() {
+  board.innerHTML = '';
+  for (let i = 0; i < 81; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.maxLength = 1;
+    input.dataset.index = i;
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/[^1-9]/g, '');
+    });
+    board.appendChild(input);
+  }
+}
+
+function getBoardArray() {
+  return Array.from(board.querySelectorAll('input')).map(cell => +cell.value || 0);
+}
+
+function setBoardArray(arr, lock = false) {
+  board.querySelectorAll('input').forEach((cell, i) => {
+    cell.classList.remove('invalid', 'valid', 'fixed');
+    cell.value = arr[i] === 0 ? '' : arr[i];
+    cell.readOnly = false;
+    if (lock && arr[i] !== 0) {
+      cell.readOnly = true;
+      cell.classList.add('fixed');
     }
+  });
+}
+
+function isValidMove(board, row, col, num, idx) {
+  for (let i = 0; i < 9; i++) {
+    if ((i !== col && board[row * 9 + i] === num) || 
+        (i !== row && board[i * 9 + col] === num)) return false;
+    const boxRow = Math.floor(row / 3) * 3 + Math.floor(i / 3);
+    const boxCol = Math.floor(col / 3) * 3 + i % 3;
+    const boxIdx = boxRow * 9 + boxCol;
+    if (boxIdx !== idx && board[boxIdx] === num) return false;
+  }
+  return true;
+}
+
+function solve(board) {
+  for (let i = 0; i < 81; i++) {
+    if (board[i] === 0) {
+      for (let num = 1; num <= 9; num++) {
+        if (isValidMove(board, Math.floor(i / 9), i % 9, num, i)) {
+          board[i] = num;
+          if (solve(board)) return true;
+          board[i] = 0;
+        }
+      }
+      return false;
+    }
+  }
+  return true;
+}
+
+function solveSudoku() {
+  const boardArr = getBoardArray();
+  const solved = [...boardArr];
+  if (solve(solved)) {
+    setBoardArray(solved);
+    alert("✅ Sudoku Solved!");
   } else {
-    selectedInput.classList.remove("incorrect");
-  }
-});
-
-function eraseCell() {
-  if (selectedInput && !selectedInput.hasAttribute("readonly")) {
-    selectedInput.value = "";
+    alert("❌ No solution exists.");
   }
 }
 
-function hint() {
-  if (selectedInput && !selectedInput.hasAttribute("readonly")) {
-    selectedInput.value = Math.floor(Math.random() * 9) + 1;
-  }
+function resetBoard() {
+  board.querySelectorAll('input').forEach(cell => {
+    cell.value = '';
+    cell.classList.remove('invalid', 'valid', 'fixed');
+    cell.readOnly = false;
+  });
 }
 
-function playAgain() {
-  buildBoard();
+function generateSudoku() {
+  resetBoard();
   startTimer();
-  document.getElementById("mistakes").textContent = "0";
-  mistakes = 0;
+  const difficulty = document.getElementById('difficulty').value;
+  const filled = difficulty === 'easy' ? 40 : difficulty === 'medium' ? 30 : 22;
+  const full = Array(81).fill(0);
+  solve(full);
+  solutionBoard = [...full];
+  const puzzle = [...solutionBoard];
+  let removed = 0;
+  while (removed < 81 - filled) {
+    let idx = Math.floor(Math.random() * 81);
+    if (puzzle[idx] !== 0) {
+      puzzle[idx] = 0;
+      removed++;
+    }
+  }
+  setBoardArray(puzzle, true);
 }
 
-window.onload = () => {
-  buildBoard();
-  startTimer();
-};
+function checkBoard() {
+  const arr = getBoardArray();
+  const cells = board.querySelectorAll('input');
+  let correct = 0, filled = 0;
+  cells.forEach((cell, i) => {
+    const val = +cell.value;
+    if (val) {
+      filled++;
+      if (val === solutionBoard[i]) {
+        cell.classList.remove('invalid');
+        cell.classList.add('valid');
+        correct++;
+      } else {
+        cell.classList.remove('valid');
+        cell.classList.add('invalid');
+      }
+    } else {
+      cell.classList.remove('invalid', 'valid');
+    }
+  });
+  if (filled === 0) alert("📝 Please enter some numbers!");
+  else if (correct === filled) alert("✅ All inputs are correct!");
+  else alert(`❌ ${filled - correct} mistake(s) found.`);
+}
+
+createBoard();
+function createBoard() {
+  board.innerHTML = '';
+  for (let i = 0; i < 81; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.maxLength = 1;
+    input.dataset.index = i;
+
+    const row = Math.floor(i / 9);
+    const col = i % 9;
+
+    // 🔲 Apply border classes for 3x3 distribution
+    if (row % 3 === 0) input.classList.add('top-border');
+    if (col % 3 === 0) input.classList.add('left-border');
+    if (col === 8) input.classList.add('right-border');
+    if (row === 8) input.classList.add('bottom-border');
+
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/[^1-9]/g, '');
+    });
+
+    board.appendChild(input);
+  }
+}
+function createBoard() {
+  board.innerHTML = '';
+  for (let i = 0; i < 81; i++) {
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.maxLength = 1;
+    input.dataset.index = i;
+
+    const row = Math.floor(i / 9);
+    const col = i % 9;
+
+    // Bold black borders every 3 blocks
+    if (row % 3 === 0) input.classList.add('top-border');
+    if (col % 3 === 0) input.classList.add('left-border');
+    if (col === 8) input.classList.add('right-border');
+    if (row === 8) input.classList.add('bottom-border');
+
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/[^1-9]/g, '');
+    });
+
+    board.appendChild(input);
+  }
+}

@@ -1,110 +1,138 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
   margin: 0;
-  padding: 0;
-  background: linear-gradient(to right, #667eea, #764ba2);
-  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(to right, #1d2b64, #f8cdda);
+  color: #fff;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   min-height: 100vh;
 }
 
-.sudoku-container {
+.container {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  margin-top: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+}
+
+h1 {
+  margin-bottom: 15px;
+  text-shadow: 2px 2px #000;
+}
+
+.controls {
+  margin-bottom: 20px;
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  background: #2c2f4a;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-}
-
-.game-board {
-  display: grid;
-  grid-template-columns: repeat(9, 40px);
-  grid-template-rows: repeat(9, 40px);
-  gap: 0;
-}
-
-.game-board input {
-  width: 40px;
-  height: 40px;
-  text-align: center;
-  font-size: 18px;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  color: #000;
-  outline: none;
-  box-sizing: border-box;
-}
-.game-board input:nth-child(9n+1),
-.game-board input:nth-child(9n+4),
-.game-board input:nth-child(9n+7) {
-  border-left: 2px solid black;
-}
-
-.game-board input:nth-child(-n+9) {
-  border-top: 2px solid black;
-}
-
-.game-board input:nth-child(n+19):nth-child(-n+27),
-.game-board input:nth-child(n+46):nth-child(-n+54) {
-  border-bottom: 2px solid black;
-}
-
-.game-board input:nth-child(3n) {
-  border-right: 2px solid black;
-}
-
-input.incorrect {
-  background-color: #ffcccc !important;
-}
-
-input[readonly] {
-  background-color: #ddd;
-}
-
-.game-panel {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.panel-header p {
-  margin: 5px 0;
-}
-
-.number-pad {
-  display: grid;
-  grid-template-columns: repeat(3, 50px);
   gap: 10px;
-  margin: 15px 0;
+  justify-content: center;
 }
 
-.number-pad button,
-.panel-actions button {
-  background: #4CAF50;
-  color: white;
+select, button {
+  padding: 10px 15px;
   border: none;
-  padding: 10px;
-  border-radius: 5px;
+  border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
+  background: #ffffff;
+  color: #333;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+  transition: background 0.3s, transform 0.2s;
 }
 
-.number-pad button:hover,
-.panel-actions button:hover {
-  background: #45a049;
+button:hover {
+  background: #e0e0e0;
+  transform: scale(1.05);
 }
-.footer {
-  margin-top: 20px;
+
+#timer {
+  font-weight: bold;
+  font-size: 18px;
+  margin-left: 15px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(9, 45px);
+  grid-template-rows: repeat(9, 45px);
+  gap: 1px;
+  margin: 0 auto;
+}
+
+.board input {
+  width: 45px;
+  height: 45px;
   text-align: center;
-  color: #f8f8f8;
+  font-size: 18px;
+  border: none;
+  background: #f0f0f0;
+  color: #222;
+  outline: none;
+  transition: background 0.2s ease;
+}
+
+.board input:focus {
+  background: #ffe082;
+}
+
+.board input.fixed {
+  background: #aaa;
+  color: #fff;
+  font-weight: bold;
+}
+
+.board input.invalid {
+  background-color: #ff8a80 !important;
+}
+
+.board input.valid {
+  background-color: #a5d6a7 !important;
+}
+
+footer {
+  margin-top: 30px;
+  color: #fff;
   font-size: 14px;
 }
+/* 🔲 Grid block bold lines */
+.board input.top-border {
+  border-top: 2px solid black;
+}
+.board input.left-border {
+  border-left: 2px solid black;
+}
+.board input.bottom-border {
+  border-bottom: 2px solid black;
+}
+.board input.right-border {
+  border-right: 2px solid black;
+}
+.board input {
+  width: 45px;
+  height: 45px;
+  text-align: center;
+  font-size: 18px;
+  background: #f0f0f0;
+  color: #222;
+  outline: none;
+  border: 1px solid #ddd; /* light internal grid lines */
+  box-sizing: border-box;
+  transition: background 0.2s ease;
+}
 
-.footer strong {
-  color: #ffcad4;
+/* Bold outer 3x3 block borders */
+.board input.top-border {
+  border-top: 2px solid #000;
+}
+.board input.left-border {
+  border-left: 2px solid #000;
+}
+.board input.right-border {
+  border-right: 2px solid #000;
+}
+.board input.bottom-border {
+  border-bottom: 2px solid #000;
 }

@@ -3,36 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sudoku Game</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>Modern Sudoku</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
-  <div class="sudoku-container">
-    <div class="game-board" id="sudoku-board"></div>
-
-    <div class="game-panel">
-      <div class="panel-header">
-        <h2>Sudoku</h2>
-        <p><strong>Mistakes:</strong> <span id="mistakes">0</span>/3</p>
-        <p><strong>Timer:</strong> <span id="timer">00:00</span></p>
-      </div>
-
-      <div class="number-pad" id="number-pad">
-        <button>1</button><button>2</button><button>3</button>
-        <button>4</button><button>5</button><button>6</button>
-        <button>7</button><button>8</button><button>9</button>
-      </div>
-
-      <div class="panel-actions">
-        <button onclick="eraseCell()">🧹 Erase</button>
-        <button onclick="hint()">💡 Hint</button>
-        <button onclick="playAgain()">🔁 New Game</button>
-      </div>
+  <div class="container">
+    <h1>🎯 Modern Sudoku</h1>
+    <div class="controls">
+      <select id="difficulty">
+        <option value="easy">Easy</option>
+        <option value="medium">Medium</option>
+        <option value="hard">Hard</option>
+      </select>
+      <button onclick="generateSudoku()">🎲 Generate</button>
+      <button onclick="solveSudoku()">✅ Solve</button>
+      <button onclick="resetBoard()">🔁 Reset</button>
+      <button onclick="checkBoard()">🔍 Check</button>
+      <span id="timer">⏱ 00:00</span>
     </div>
+    <div class="board" id="board"></div>
   </div>
-  <footer class="footer">
-    <p>Developed by <strong>Anjali Yadav</strong></p>
+
+  <footer>
+    <p>Made with ❤️ by Anjali Yadav</p>
   </footer>
 
   <script src="script.js"></script>
