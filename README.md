@@ -3,3 +3,11 @@ This is an interactive web-based **Sudoku Game** built using HTML, CSS, and Java
 
 --- 
 
+## 🎮 Features
+
+- 🧩 Play Sudoku puzzles in **Easy**, **Medium**, and **Hard** modes   
+- ✨ Simple and attractive **user interface**  
+- ✅ **Check** your solution anytime  
+- ♻️ **Reset** or **Play Again** quickly  
+- 🧠 **Auto-solve** the puzzle with one click  
+- 💻 Runs directly in any modern browser (Chrome, Firefox, Edge, etc.)
