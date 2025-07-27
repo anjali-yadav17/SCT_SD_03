@@ -53,8 +53,6 @@ button:hover {
   transform: scale(1.05);
 }
 
-
-
 .board {
   display: grid;
   grid-template-columns: repeat(9, 45px);
@@ -70,7 +68,7 @@ button:hover {
   height: 45px;
   text-align: center;
   font-size: 18px;
-  background: #efe4f7; /* soft lavender */
+  background: #efe4f7;
   color: #222;
   outline: none;
   border: 1px solid #ddd;
@@ -79,27 +77,26 @@ button:hover {
 }
 
 .board input:focus {
-  background: #fddde6; /* soft pink focus */
+  background: #fddde6;
 }
 
 .board input.fixed {
-  background: #9e79b9; /* violet-gray */
+  background: #9e79b9;
   color: #fff;
   font-weight: bold;
 }
 
 .board input.invalid {
-  background-color: #f44336 !important; /* normal red */
+  background-color: #f44336;
   color: white;
   font-weight: bold;
   border: 2px solid #b71c1c;
 }
 
 .board input.valid {
-  background-color: #a5d6a7 !important; /* soft green */
+  background-color: #a5d6a7; 
 }
 
-/* Bold 3x3 block borders */
 .board input.top-border {
   border-top: 2px solid #000;
 }
