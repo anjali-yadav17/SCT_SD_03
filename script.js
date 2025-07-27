@@ -148,7 +148,6 @@ function createBoard() {
     const row = Math.floor(i / 9);
     const col = i % 9;
 
-    // 🔲 Apply border classes for 3x3 distribution
     if (row % 3 === 0) input.classList.add('top-border');
     if (col % 3 === 0) input.classList.add('left-border');
     if (col === 8) input.classList.add('right-border');
@@ -172,7 +171,6 @@ function createBoard() {
     const row = Math.floor(i / 9);
     const col = i % 9;
 
-    // Bold black borders every 3 blocks
     if (row % 3 === 0) input.classList.add('top-border');
     if (col % 3 === 0) input.classList.add('left-border');
     if (col === 8) input.classList.add('right-border');
