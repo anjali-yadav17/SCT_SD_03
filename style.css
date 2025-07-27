@@ -87,7 +87,7 @@ button:hover {
 }
 
 .board input.invalid {
-  background-color: #f44336;
+  background-color:#dc143c;
   color: white;
   font-weight: bold;
   border: 2px solid #b71c1c;
