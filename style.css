@@ -1,7 +1,7 @@
 body {
   margin: 0;
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(to right, #1d2b64, #f8cdda);
+  background: linear-gradient(135deg, #654ea3 0%, #eaafc8 100%);
   color: #fff;
   display: flex;
   flex-direction: column;
