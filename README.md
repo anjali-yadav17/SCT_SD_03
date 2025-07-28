@@ -40,6 +40,14 @@ This is a browser-based Sudoku game with a clean and modern user interface. The 
 
 ---
 
+## 🔧 Technologies Used
+
+-HTML5
+-CSS3
+-Vanilla JavaScript
+
+---
+
 ## 👩‍💻 Developed By
 
 **Anjali Yadav**
