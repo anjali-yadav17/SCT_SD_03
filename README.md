@@ -26,6 +26,12 @@ This is a browser-based Sudoku game with a clean and modern user interface. The 
 
 ---
 
+## Screenshot
+
+![Sudoku Game Screenshot](2d708168-5ee7-4c15-99ae-4fb347e04298.png)
+
+---
+
 ## 🚀 Getting Started
 
 ### ✅ Open Locally (No installation required)
