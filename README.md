@@ -28,7 +28,7 @@ This is a browser-based Sudoku game with a clean and modern user interface. The 
 
 ## Screenshot
 
-<img src="https://i.ibb.co/XYZabc/sudoku-preview.png" alt="Sudoku Screenshot" width="100%" />
+![Sudoku Screenshot](https://i.ibb.co/XYZabc/sudoku-preview.png)
 
 ---
 
