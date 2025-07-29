@@ -28,7 +28,7 @@ This is a browser-based Sudoku game with a clean and modern user interface. The 
 
 ## Screenshot
 
-<img width="1918" height="971" alt="Sudoku UI" src="https://github.com/user-attachments/assets/47a35fb6-f6e6-495f-b2b5-8e58cf6888ac" />
+<img width="1526" height="768" alt="Sudoku Screenshot" src="https://github.com/user-attachments/assets/3d68c885-51c4-47df-9cf1-c2b9aa2a2b56" />
 
 ---
 
