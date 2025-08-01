@@ -1,4 +1,4 @@
-# 🧠 Sudoku Web Game
+# SCT_SD_03
 
 A modern, elegant, and fully interactive Sudoku game built using HTML, CSS, and JavaScript.  
 **Play · Solve · Learn · Enjoy**
