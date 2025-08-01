@@ -26,7 +26,7 @@ This is a browser-based Sudoku game with a clean and modern user interface. The 
 
 ---
 
-## Screenshot
+## 📸 Screenshot
 
 ![alt text](<Screenshot 2025-07-28 232544.png>)
 
